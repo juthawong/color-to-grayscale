@@ -1,0 +1,37 @@
+web:
+  build: .
+  volumes:
+   - .:/app/code
+  ports:
+   - "8000:8000"
+  links:
+   - db
+   - redis
+  working_dir: /app/code/grayscale/
+  command: python manage.py runserver 0.0.0.0:8000
+
+
+worker:
+  build: .
+  volumes:
+   - .:/app/code
+  links:
+   - db
+   - redis
+  working_dir: /app/code/grayscale/
+  command: celery -A grayscale worker -l info
+
+
+db:
+  image: postgres:9.3.5
+
+
+redis:
+  image: redis:2.8.17
+
+
+frontend:
+  build: frontend
+  command: grunt watch
+  volumes:
+    - ./grayscale:/app/fe/grayscale

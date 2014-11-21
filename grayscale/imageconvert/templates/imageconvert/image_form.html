@@ -1,0 +1,42 @@
+{% load staticfiles %}<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Color ⇢ Grayscale</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <style>
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Color-to-Grayscale Converter</h1>
+
+            <form action="/"
+                class="dropzone"
+                id="my-awesome-dropzone">
+                {% csrf_token %}
+            </form>
+
+            <div class="images">
+            {% for image in object_list %}
+            <div class="row image-row">
+                <div class="col-xs-6 color-image">
+                    <img src="{{ image.color_file.url }}" width="100%" />
+                </div>
+                <div class="col-xs-6 gray-image">
+                    <img src="{{ image.gray_file.url }}" width="100%" />
+                </div>
+            </div>
+            <hr/>
+            {% endfor %}
+            </div>
+
+        </div>
+
+        <script src="{% static 'js/all.js' %}"></script>
+
+    </body>
+</html>
